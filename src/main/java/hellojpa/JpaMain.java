@@ -18,14 +18,23 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Member findMember = em.find(Member.class, 1L);
 
-            List <Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
+            // 객체만 생성 비영속 상태
+            Member member = new Member(1L, "신재원");
 
-            for (Member member : result) {
-                System.out.println("member = " + member.getName());
-            }
+            member.setName("AAAAA");
+
+            // 지금 부터는 영속 상태(DB에는 저장 X)
+            em.persist(member);
+
+            /* 준영속 상태 = 엔티티를 영속성 컨텍스트에서 분리
+            em.detach(member);
+            */
+
+            /* 객체를 삭제
+            em.remove(member);
+            * */
+
             /*
             수정
             기본에 있는 데이터를 밀고 새로운걸 저장한다.
