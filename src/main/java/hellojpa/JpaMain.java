@@ -19,9 +19,13 @@ public class JpaMain {
         tx.begin();
         try{
 
-            // 객체만 생성 비영속 상태
-            Member member = new Member(1L, "신재원");
+        /*  객체만 생성 비영속 상태
+            Member member = new Member();
+            member.setId("hello");
+            member.setUserName("회원1");
+            */
 
+            Member member = new Member(1L, "신재원");
             member.setName("AAAAA");
 
             // 지금 부터는 영속 상태(DB에는 저장 X)
@@ -38,7 +42,7 @@ public class JpaMain {
             /*
             수정
             기본에 있는 데이터를 밀고 새로운걸 저장한다.
-            persist로 저장을 안해도됨
+            em.persist로 저장을 안해도됨
             findMember.setName("helloJpa");
            */
             /*
@@ -63,3 +67,26 @@ public class JpaMain {
         emf.close();
     }
 }
+/*
+JPQL로 전체 회원 조회
+ List<Member> result = em.createQuery("select m from Member as m", Member.class)
+                    // 페이징 처리 5번부터 10번까지 가져와
+                    .setFirstResult(5)
+                    .setMaxResults(10)
+                    .getResultList();
+            for (Member member : result) {
+                System.out.println("member.name = " + member.getName());
+            }
+
+
+ */
+/*
+
+    DB에 저장 X, 영속성 컨택스트에 차곡차곡 엔티티,쿼리가 쌓인다.
+    em.commit을 하는 시점에 DB에 날라간다.
+    Member member1 = new Member(150L, "신재원1");
+    Member member2 = new Member(160L, "신재원2");
+
+            em.persist(member1);
+            em.persist(member2);
+*/

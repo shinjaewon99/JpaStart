@@ -10,6 +10,7 @@ public class Member {
     private Long id;
     private String name;
 
+    // JPA가 동적으로 내부적 리플렉션을 쓰기떄문에 기본생성자가 필요하다
     public Member() {
 
     }
