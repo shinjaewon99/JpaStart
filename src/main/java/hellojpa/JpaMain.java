@@ -18,6 +18,13 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
+            Member member = new Member();
+            member.setId(3L);
+            member.setName("C");
+            member.setRoleType(RoleType.GUEST);
+            em.persist(member);
+            // DB에 저장
+            tx.commit();
 
         /*  객체만 생성 비영속 상태
             Member member = new Member();
@@ -25,11 +32,11 @@ public class JpaMain {
             member.setUserName("회원1");
             */
 
-            Member member = new Member(1L, "신재원");
-            member.setName("AAAAA");
 
-            // 지금 부터는 영속 상태(DB에는 저장 X)
+            /*
+            지금 부터는 영속 상태(DB에는 저장 X)
             em.persist(member);
+            */
 
             /* 준영속 상태 = 엔티티를 영속성 컨텍스트에서 분리
             em.detach(member);
@@ -55,9 +62,6 @@ public class JpaMain {
             member.setName("helloA");
             em.persist(member);
             */
-            
-            // DB에 저장
-            tx.commit();
         }catch (Exception e){
             tx.rollback();
         }finally {
